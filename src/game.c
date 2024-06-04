@@ -12,7 +12,6 @@ The rules are simple:
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 1024
 
-
 int main(void) 
 {
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Conway's Game of life");
