@@ -91,6 +91,7 @@ bool check_neighbours(world* g, int i, int j)
 			return 1;
 		}
 	}
+	return 0;
 }
 
 void new_state(world* g) 

@@ -23,7 +23,7 @@ int main(void)
   SetTargetFPS(10);
   float elapsed_time = 0;
   float thicks = 1.0f;
-  bool play = 0, edit = 0;
+  bool play = 0;
 
   while (!WindowShouldClose()) {
     float delta_t = GetFrameTime();
