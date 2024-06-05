@@ -1,0 +1,43 @@
+
+body {
+  font-family: system-ui;
+  background: #121212;
+  color: #ccc;
+  line-height: 1.5;
+  max-width: 60em;
+  padding: 0 1em;
+  margin: auto;
+}
+
+.emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }*/
+div.emscripten { text-align: center; }*/
+canvas.emscripten { border: 0px none; background-color: black; }
+
+h1, h2, h3, h4, h5 {
+  margin: 0.5em 0 0.5em;
+  line-height: 1.2;
+  font-weight: bold;
+  clear: both;
+}
+
+p, ul{
+  font-size: 1.3em;
+}
+
+#status {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 30px;
+  margin-left: 20px;
+  font-weight: bold;
+  color: rgb(120, 120, 120);
+}
+
+#progress {
+  height: 20px;
+  width: 300px;
+}
+
+/*.controls {
+  margin-left: 50%;
+}*/
