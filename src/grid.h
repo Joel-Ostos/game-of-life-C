@@ -55,7 +55,7 @@ void render_world(world* g) {
       if (!(g->actual_map[i][j])) {
 	DrawRectangle(i*g->cell_size, j*g->cell_size, g->cell_size, g->cell_size, BLACK);
       } else {
-	DrawRectangle(i*g->cell_size, j*g->cell_size, g->cell_size, g->cell_size, WHITE);
+	DrawRectangle(i*g->cell_size, j*g->cell_size, g->cell_size, g->cell_size, RAYWHITE);
       }
     }
   }

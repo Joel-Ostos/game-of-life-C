@@ -19,7 +19,7 @@ int main(void)
   world* w = init_world(ROWS, COLS, CELL_SIZE, GRAY);
   assert(w != NULL);
 
-  SetTargetFPS(60);
+  SetTargetFPS(15);
   float elapsed_time = 0;
   float thicks = 1.0f;
   bool play = 0;
@@ -39,9 +39,9 @@ int main(void)
 
     if (!play) {
 	    Vector2 pos = GetMousePosition();
-	    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+	    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 		    edit_world(w, pos, 1);
-	    } else if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+	    } else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
 		    edit_world(w, pos, 0);
 	    }
     }
