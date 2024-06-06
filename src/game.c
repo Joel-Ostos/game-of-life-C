@@ -23,6 +23,7 @@ int main(void)
   float elapsed_time = 0;
   float thicks = 1.0f;
   bool play = 0;
+  float year = 1.f;
 
   while (!WindowShouldClose()) {
     float delta_t = GetFrameTime();
@@ -31,7 +32,6 @@ int main(void)
     BeginDrawing();
 
     ClearBackground(WHITE);
-
 
     if (IsKeyPressed(KEY_P)) {
 	    play = play ? 0 : 1;
@@ -62,6 +62,11 @@ int main(void)
     }
 
     render_world(w);
+
+    DrawText(TextFormat("Year: %1.1f", year), 30, SCREEN_HEIGHT - 50, 25, RAYWHITE);
+    year /= thicks;
+    year += 0.1f;
+
     EndDrawing();
   }
 }
