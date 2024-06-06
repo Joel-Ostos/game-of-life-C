@@ -18,33 +18,41 @@ struct world {
   int columns;
   float cell_size;
   Color line_color;
-  bool** map;
+  bool** actual_map;
+  bool** new_map;
 };
 
 world* init_world(int rows, int columns, float cell_size, Color color)
 {
-  world* g = (world*) malloc(sizeof(world));
-  bool** m = (bool**) malloc(rows * (sizeof(bool*)));
+  world* actual_world = (world*) malloc(sizeof(world));
+  bool** actual_map = (bool**) malloc(rows * (sizeof(bool*)));
+  bool** new_map = (bool**) malloc(rows * (sizeof(bool*)));
+
   for (int i = 0; i < rows; i++) {
-    m[i] = (bool*) malloc(columns * sizeof(bool*));
+    actual_map[i] = (bool*) malloc(columns * sizeof(bool*));
+    new_map[i] = (bool*) malloc(columns * sizeof(bool*));
   }
+
   for (int i = 0; i < rows; i++) {
     for (int j = 0; j < columns; j++) {
-      m[i][j] = 0;
+      actual_map[i][j] = 0;
+      new_map[i][j] = 0;
     }
   }
-  g->columns = columns;
-  g->rows = rows;
-  g->cell_size = cell_size;
-  g->line_color = color;
-  g->map = m;
-  return g;
+
+  actual_world->columns = columns;
+  actual_world->rows = rows;
+  actual_world->cell_size = cell_size;
+  actual_world->line_color = color;
+  actual_world->actual_map = actual_map;
+  actual_world->new_map = new_map;
+  return actual_world;
 }
 
 void render_world(world* g) {
   for (int i = 0; i < g->rows; i++) {
     for (int j = 0; j < g->columns; j++) {
-      if (!(g->map[i][j])) {
+      if (!(g->actual_map[i][j])) {
 	DrawRectangle(i*g->cell_size, j*g->cell_size, g->cell_size, g->cell_size, BLACK);
       } else {
 	DrawRectangle(i*g->cell_size, j*g->cell_size, g->cell_size, g->cell_size, WHITE);
@@ -57,7 +65,7 @@ void reset_world(world* g)
 {
   for (int i = 0; i < g->rows; i++) {
     for (int j = 0; j < g->columns; j++) {
-	    g->map[i][j] = 0;
+	    g->actual_map[i][j] = 0;
     }
   }
 }
@@ -71,11 +79,11 @@ bool check_neighbours(world* g, int i, int j)
 			int nx = i + k;
 			int ny = j + l;
 			if (nx >= 0 && nx < g->rows && ny >= 0 && ny < g->columns) {	
-				count_neighbours += g->map[nx][ny];
+				count_neighbours += g->actual_map[nx][ny];
 			}
 		}
 	}
-	bool actual_state = g->map[i][j];
+	bool actual_state = g->actual_map[i][j];
 	if (actual_state) {
 		if (count_neighbours >= 2 && count_neighbours <= 3) {
 			return 1;
@@ -86,43 +94,35 @@ bool check_neighbours(world* g, int i, int j)
 		if (count_neighbours < 2) {
 			return 0;
 		}
-	} else {
-		if (count_neighbours == 3) {
-			return 1;
-		}
+	}
+	if (count_neighbours == 3) {
+		return 1;
 	}
 	return 0;
 }
 
 void new_state(world* g) 
 {
-	bool** m = (bool**) malloc(g->rows * (sizeof(bool*)));
-	for (int i = 0; i < g->rows; i++) {
-		m[i] = (bool*) malloc(g->columns * sizeof(bool*));
-	}
 	for (int i = 0; i < g->rows; i++) {
 		for (int j = 0; j < g->columns; j++) {
 			bool state = check_neighbours(g, i, j);	
 			if (state) {
-				m[i][j] = 1;
+				g->new_map[i][j] = 1;
 			} else {
-				m[i][j] = 0;
+				g->new_map[i][j] = 0;
 			}
 		}
 	}
-
-	for (int i = 0; i < g->rows; i++) {
-		free(g->map[i]);
-	}
-	free(g->map);
-	g->map = m;
+	bool** tmp_map = g->actual_map;
+	g->actual_map = g->new_map;
+	g->new_map = tmp_map;
 }
 
 void edit_world(world* g, Vector2 pos, bool s) 
 {
 	int x = (int) pos.x / CELL_SIZE;
 	int y = (int) pos.y / CELL_SIZE;
-	g->map[x][y] = s ? 1 : 0;
+	g->actual_map[x][y] = s ? 1 : 0;
 }
 
 #endif

@@ -10,7 +10,7 @@ The rules are simple:
 #include "grid.h"
 
 #define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 1024
+#define SCREEN_HEIGHT 512
 
 int main(void) 
 {
@@ -19,7 +19,7 @@ int main(void)
   world* w = init_world(ROWS, COLS, CELL_SIZE, GRAY);
   assert(w != NULL);
 
-  SetTargetFPS(10);
+  SetTargetFPS(60);
   float elapsed_time = 0;
   float thicks = 1.0f;
   bool play = 0;
